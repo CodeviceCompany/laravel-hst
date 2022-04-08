@@ -2,9 +2,9 @@
 
 namespace CodeviceCompany\LaravelHst\Tests;
 
+use CodeviceCompany\LaravelHst\LaravelHstServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use CodeviceCompany\LaravelHst\LaravelHstServiceProvider;
 
 class TestCase extends Orchestra
 {
