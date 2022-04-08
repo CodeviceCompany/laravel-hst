@@ -5,6 +5,7 @@ namespace CodeviceCompany\LaravelHst;
 use CodeviceCompany\LaravelHst\Commands\MakeActionCommand;
 use CodeviceCompany\LaravelHst\Commands\MakeDtoCommand;
 use CodeviceCompany\LaravelHst\Commands\MakeQueryBuilderCommand;
+use CodeviceCompany\LaravelHst\Commands\StubPublishCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use CodeviceCompany\LaravelHst\Commands\LaravelHstCommand;
@@ -25,6 +26,7 @@ class LaravelHstServiceProvider extends PackageServiceProvider
                 MakeActionCommand::class,
                 MakeDtoCommand::class,
                 MakeQueryBuilderCommand::class,
+                StubPublishCommand::class,
             ]);
     }
 }
