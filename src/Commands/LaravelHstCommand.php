@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace CodeviceCompany\LaravelHst\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class LaravelHstCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'laravel-hst';
 
     public $description = 'My command';
 
