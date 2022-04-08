@@ -1,0 +1,16 @@
+<?php
+
+namespace {{ namespace }};
+
+use Lorisleiva\Actions\Concerns\AsAction;
+use {{ namespacedDTO }};
+
+class {{ class }}
+{
+    use AsAction;
+
+    public function handle({{ dto }} $dto)
+    {
+        //
+    }
+}

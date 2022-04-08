@@ -1,0 +1,13 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Database\Eloquent\Builder;
+
+class {{ class }} extends Builder
+{
+    public function createdBefore($date): self
+    {
+        return $this->where('created_at', '<=', \Carbon\Carbon::parse($date));
+    }
+}
