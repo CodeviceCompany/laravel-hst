@@ -2,12 +2,12 @@
 
 namespace CodeviceCompany\LaravelHst\Actions\Support;
 
+use function base_path;
 use CodeviceCompany\LaravelHst\DTOs\Support\InstallComposerPackagesDTO;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\Process;
-use function base_path;
 
 class InstallComposerPackagesAction
 {

@@ -2,13 +2,13 @@
 
 namespace CodeviceCompany\LaravelHst;
 
+use CodeviceCompany\LaravelHst\Commands\HstInstallCommand;
 use CodeviceCompany\LaravelHst\Commands\MakeActionCommand;
 use CodeviceCompany\LaravelHst\Commands\MakeDtoCommand;
 use CodeviceCompany\LaravelHst\Commands\MakeQueryBuilderCommand;
 use CodeviceCompany\LaravelHst\Commands\StubPublishCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use CodeviceCompany\LaravelHst\Commands\HstInstallCommand;
 
 class LaravelHstServiceProvider extends PackageServiceProvider
 {

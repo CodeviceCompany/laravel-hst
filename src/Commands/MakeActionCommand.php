@@ -2,8 +2,8 @@
 
 namespace CodeviceCompany\LaravelHst\Commands;
 
-use Illuminate\Console\GeneratorCommand;
 use Illuminate\Console\Concerns\CreatesMatchingTest;
+use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -97,7 +97,6 @@ class MakeActionCommand extends GeneratorCommand
             ? $customPath
             : __DIR__.$stub;
     }
-
 
     protected function getOptions()
     {

@@ -18,7 +18,6 @@ class HstInstallCommand extends Command
 
     public $description = 'Setup githooks/composer_dependencies/phpmd/phpstan/php-cs-fixer';
 
-
     public function handle(): int
     {
         if (! $this->confirmToProceed()) {
@@ -96,7 +95,7 @@ class HstInstallCommand extends Command
      */
     protected static function flushNodeModules()
     {
-        tap(new Filesystem, function (Filesystem $files) {
+        tap(new Filesystem(), function (Filesystem $files) {
             $files->deleteDirectory(base_path('node_modules'));
 
             $files->delete(base_path('yarn.lock'));
@@ -140,7 +139,7 @@ class HstInstallCommand extends Command
     private function publishFiles(): void
     {
         if (! is_dir($stubsPath = $this->laravel->basePath())) {
-            (new Filesystem)->makeDirectory($stubsPath);
+            (new Filesystem())->makeDirectory($stubsPath);
         }
 
         $files = [
