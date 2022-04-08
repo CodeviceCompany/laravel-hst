@@ -3,8 +3,8 @@
 ## TODO
 
 - [ ] add hst:install command
-  - [ ] setup install required composer packages
-  - [ ] setup install required npm packages
+  - [x] setup install required composer packages
+  - [x] setup install required npm packages
   - [ ] setup phpmd
   - [ ] setup phpstan
   - [ ] setup php-cs-fixer

@@ -8,7 +8,7 @@ use CodeviceCompany\LaravelHst\Commands\MakeQueryBuilderCommand;
 use CodeviceCompany\LaravelHst\Commands\StubPublishCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use CodeviceCompany\LaravelHst\Commands\LaravelHstCommand;
+use CodeviceCompany\LaravelHst\Commands\HstInstallCommand;
 
 class LaravelHstServiceProvider extends PackageServiceProvider
 {
@@ -27,6 +27,7 @@ class LaravelHstServiceProvider extends PackageServiceProvider
                 MakeDtoCommand::class,
                 MakeQueryBuilderCommand::class,
                 StubPublishCommand::class,
+                HstInstallCommand::class,
             ]);
     }
 }
