@@ -3,15 +3,16 @@
 ## TODO
 
 - [ ] add hst:install command
+  - [ ] setup githooks
   - [x] setup install required composer packages
   - [x] setup install required npm packages
-  - [ ] setup phpmd
-  - [ ] setup phpstan
-  - [ ] setup php-cs-fixer
+  - [x] setup phpmd
+  - [x] setup phpstan
+  - [x] setup php-cs-fixer
   - [ ] publish github action for testing and deployment
-  - [ ] publish .env.example and .env.testing
-  - [ ] setup .gitignore
-  - [ ] setup wipit script
+  - [x] publish .env.example and .env.testing
+  - [x] setup .gitignore
+  - [x] setup wipit script
 
 ## DONE
 

@@ -29,14 +29,13 @@ class HstInstallCommand extends Command
 
         $this->installNodePackages();
 
+        $this->publishFiles();
+
         //render('<div class="px-1 bg-green-300">Successfully installed</div>');
 
         return self::SUCCESS;
     }
 
-    /**
-     * @return void
-     */
     private function installNodePackages(): void
     {
         $this->updateNodePackages(
@@ -61,16 +60,11 @@ class HstInstallCommand extends Command
         $this->comment('Please execute "npm install && npm run dev" to build your assets.');
     }
 
-    /**
-     * @return void
-     * @throws \Spatie\DataTransferObject\Exceptions\UnknownProperties
-     */
     private function installComposerPackages(): void
     {
         InstallComposerPackagesAction::run(new InstallComposerPackagesDTO(
             packages: [
                 "blade-ui-kit/blade-heroicons",
-                "blade-ui-kit/blade-ui-kit",
                 "lorisleiva/laravel-actions",
                 "owenvoke/blade-fontawesome",
                 "spatie/data-transfer-object",
@@ -80,13 +74,6 @@ class HstInstallCommand extends Command
                 "spatie/laravel-ray",
                 "spatie/laravel-translatable",
                 "spatie/laravel-view-models",
-                "squirephp/countries-en",
-                "squirephp/countries-fr",
-                "squirephp/model",
-                "squirephp/timezones-en",
-                "torann/geoip",
-                "wire-elements/modal",
-                "wireui/wireui",
             ],
             devPackages: [
                 'barryvdh/laravel-debugbar',
@@ -146,5 +133,31 @@ class HstInstallCommand extends Command
             base_path('package.json'),
             json_encode($packages, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) . PHP_EOL
         );
+    }
+
+    /**
+     * @return void
+     */
+    private function publishFiles(): void
+    {
+        if (! is_dir($stubsPath = $this->laravel->basePath())) {
+            (new Filesystem)->makeDirectory($stubsPath);
+        }
+
+        $files = [
+            __DIR__ . '/stubs/tailwind.config.js.stub' => $stubsPath . '/tailwind.config.js',
+            __DIR__ . '/stubs/env.example.stub' => $stubsPath . '/.env.example',
+            __DIR__ . '/stubs/env.testing.stub' => $stubsPath . '/.env.testing',
+            __DIR__ . '/stubs/webpack.mix.js.stub' => $stubsPath . '/webpack.mix.js',
+            __DIR__ . '/stubs/gitignore.stub' => $stubsPath . '/.gitignore',
+            __DIR__ . '/stubs/wipit.stub' => $stubsPath . '/wipit',
+            __DIR__ . '/stubs/phpstan.neon.stub' => $stubsPath . '/phpstan.neon',
+            __DIR__ . '/stubs/phpmd.xml.stub' => $stubsPath . '/phpmd.xml',
+            __DIR__ . '/stubs/php-cs-fixer.php.stub' => $stubsPath . '/.php-cs-fixer.php',
+        ];
+
+        foreach ($files as $from => $to) {
+            file_put_contents($to, file_get_contents($from));
+        }
     }
 }

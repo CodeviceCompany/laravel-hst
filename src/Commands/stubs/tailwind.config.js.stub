@@ -1,0 +1,33 @@
+const defaultTheme = require('tailwindcss/defaultTheme');
+
+module.exports = {
+    mode: 'jit',
+
+    content: [
+        './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
+        './vendor/laravel/jetstream/**/*.blade.php',
+        './storage/framework/views/*.php',
+        './resources/views/**/*.blade.php',
+    ],
+
+    theme: {
+        extend: {
+            fontFamily: {
+                sans: ['Inter', ...defaultTheme.fontFamily.sans]
+            },
+            colors: {
+                'facebook': '#4867aa',
+                'instagram': '#bc2a8d',
+                'twitter': '#2eb6f1',
+                'linkedin': '#1a77b5',
+            },
+        },
+    },
+
+    plugins: [
+        require('@tailwindcss/forms'),
+        require('@tailwindcss/typography'),
+        require('@tailwindcss/aspect-ratio'),
+        require('@tailwindcss/line-clamp'),
+    ]
+};

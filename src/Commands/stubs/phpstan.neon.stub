@@ -1,0 +1,16 @@
+includes:
+    - ./vendor/nunomaduro/larastan/extension.neon
+
+parameters:
+    checkModelProperties: true
+    paths:
+        - app
+
+    # The level 8 is the highest level
+    level: 5
+
+
+    excludePaths:
+        - ./database/factories/*.php
+
+    checkMissingIterableValueType: false

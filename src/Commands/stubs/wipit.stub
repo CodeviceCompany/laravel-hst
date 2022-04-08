@@ -1,0 +1,11 @@
+#!/bin/sh
+git add .
+git commit -m 'WIP'
+
+if [ $? != 0 ]
+then
+    exit 1
+fi
+
+git push
+say Just WIPPED your code
