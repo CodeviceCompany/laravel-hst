@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+echo "[PRE-COMMIT] Running pre-commit script"
+echo "+-----------------------------------+"
+echo "| [PRE-COMMIT] Running PHP CS Fixer |"
+echo "+-----------------------------------+"
+
+./vendor/bin/php-cs-fixer fix
+git add .
+
+echo "+-----------------------------------+"
+echo "| [PRE-COMMIT] Running PHPStan      |"
+echo "+-----------------------------------+"
+./vendor/bin/phpstan analyse -c phpstan.neon --memory-limit 512M
+
+if [ $? != 0 ]
+then
+    echo "[PRE-COMMIT] PHPStan detected an error. Please fix all the errors."
+    exit 1
+fi
+## PHPStan - [END]
+
+## PHPMD - [START]
+echo "+-----------------------------------+"
+echo "| [PRE-COMMIT] Running PHPMD        |"
+echo "+-----------------------------------+"
+
+./vendor/bin/phpmd . text phpmd.xml
+
+if [ $? != 0 ]
+then
+    echo "[PRE-COMMIT] PHPMD detected an error. Please fix all the errors."
+    exit 1
+fi
+git add .
+## PHPMD - [END]

@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+echo "+-----------------------------------+"
+echo "| [PRE-COMMIT] Running PHPUNIT      |"
+echo "+-----------------------------------+"
+
+php artisan test
+if [ $? != 0 ]
+then
+    echo "[PRE-COMMIT] PHPUNIT detected an error. Please fix all the errors."
+    exit 1
+fi

@@ -25,11 +25,14 @@ class HstInstallCommand extends Command
             return 1;
         }
 
-        $this->installComposerPackages();
-
-        $this->installNodePackages();
-
+//        $this->installComposerPackages();
+//
+//        $this->installNodePackages();
+//
         $this->publishFiles();
+
+        $this->line('');
+        $this->comment('npm install && npm run dev && git config core.hooksPath ./githooks/ && chmod +x githooks/*');
 
         //render('<div class="px-1 bg-green-300">Successfully installed</div>');
 
@@ -54,10 +57,6 @@ class HstInstallCommand extends Command
                     "tailwindcss" => "^3.0.23",
                 ] + $packages
         );
-
-        $this->line('');
-        $this->info('NPM packages installed successfully.');
-        $this->comment('Please execute "npm install && npm run dev" to build your assets.');
     }
 
     private function installComposerPackages(): void
@@ -145,16 +144,29 @@ class HstInstallCommand extends Command
         }
 
         $files = [
-            __DIR__ . '/stubs/tailwind.config.js.stub' => $stubsPath . '/tailwind.config.js',
-            __DIR__ . '/stubs/env.example.stub' => $stubsPath . '/.env.example',
-            __DIR__ . '/stubs/env.testing.stub' => $stubsPath . '/.env.testing',
-            __DIR__ . '/stubs/webpack.mix.js.stub' => $stubsPath . '/webpack.mix.js',
-            __DIR__ . '/stubs/gitignore.stub' => $stubsPath . '/.gitignore',
-            __DIR__ . '/stubs/wipit.stub' => $stubsPath . '/wipit',
-            __DIR__ . '/stubs/phpstan.neon.stub' => $stubsPath . '/phpstan.neon',
-            __DIR__ . '/stubs/phpmd.xml.stub' => $stubsPath . '/phpmd.xml',
-            __DIR__ . '/stubs/php-cs-fixer.php.stub' => $stubsPath . '/.php-cs-fixer.php',
+            __DIR__ . '/stubs/unpublishable/tailwind.config.js.stub' => $stubsPath . '/tailwind.config.js',
+            __DIR__ . '/stubs/unpublishable/env.example.stub' => $stubsPath . '/.env.example',
+            __DIR__ . '/stubs/unpublishable/env.testing.stub' => $stubsPath . '/.env.testing',
+            __DIR__ . '/stubs/unpublishable/webpack.mix.js.stub' => $stubsPath . '/webpack.mix.js',
+            __DIR__ . '/stubs/unpublishable/gitignore.stub' => $stubsPath . '/.gitignore',
+            __DIR__ . '/stubs/unpublishable/wipit.stub' => $stubsPath . '/wipit',
+            __DIR__ . '/stubs/unpublishable/phpstan.neon.stub' => $stubsPath . '/phpstan.neon',
+            __DIR__ . '/stubs/unpublishable/phpmd.xml.stub' => $stubsPath . '/phpmd.xml',
+            __DIR__ . '/stubs/unpublishable/php-cs-fixer.php.stub' => $stubsPath . '/.php-cs-fixer.php',
+
+            __DIR__ . '/stubs/unpublishable/githooks/pre-push.stub' => $stubsPath . '/githooks/pre-push',
+            __DIR__ . '/stubs/unpublishable/githooks/pre-commit.stub' => $stubsPath . '/githooks/pre-commit',
+
+            __DIR__ . '/stubs/unpublishable/.github/test_and_deploy_main.yml.stub' => $stubsPath . '/.github/test_and_deploy_main.yml',
         ];
+
+        if (! is_dir($path = $this->laravel->basePath('/githooks'))) {
+            (new Filesystem())->makeDirectory($path, 0755, true);
+        }
+
+        if (! is_dir($path = $this->laravel->basePath('.github'))) {
+            (new Filesystem())->makeDirectory($path, 0755, true);
+        }
 
         foreach ($files as $from => $to) {
             file_put_contents($to, file_get_contents($from));

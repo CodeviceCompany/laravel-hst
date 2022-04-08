@@ -1,0 +1,125 @@
+name: Test and Deploy
+
+on:
+  push:
+    branches: [ main, staging ]
+  pull_request:
+    branches: [ main, staging ]
+
+jobs:
+
+  test:
+      name: Laravel (PHP ${{ matrix.php-versions }})
+      runs-on: ubuntu-latest
+      env:
+        DB_DATABASE: laravel
+        DB_USERNAME: root
+        DB_PASSWORD: password
+        BROADCAST_DRIVER: log
+        CACHE_DRIVER: redis
+        QUEUE_CONNECTION: redis
+        SESSION_DRIVER: redis
+      services:
+        mysql:
+          image: mysql:latest
+          env:
+            MYSQL_ALLOW_EMPTY_PASSWORD: false
+            MYSQL_ROOT_PASSWORD: password
+            MYSQL_DATABASE: laravel
+          ports:
+            - 3306/tcp
+          options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+        redis:
+          image: redis
+          ports:
+            - 6379/tcp
+          options: --health-cmd="redis-cli ping" --health-interval=10s --health-timeout=5s --health-retries=3
+      strategy:
+        fail-fast: false
+        matrix:
+          php-versions: ['8.1']
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v2
+
+        # Docs: https://github.com/shivammathur/setup-php
+        - name: Setup PHP
+          uses: shivammathur/setup-php@v2
+          with:
+            php-version: ${{ matrix.php-versions }}
+            extensions: mbstring, dom, fileinfo, mysql
+            coverage: xdebug
+
+        - name: Start mysql service
+          run: sudo systemctl start mysql
+
+        - name: Get composer cache directory
+          id: composer-cache
+          run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+        - name: Cache composer dependencies
+          uses: actions/cache@v2
+          with:
+            path: ${{ steps.composer-cache.outputs.dir }}
+            # Use composer.json for key, if composer.lock is not committed.
+            # key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+            key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+            restore-keys: ${{ runner.os }}-composer-
+
+        - name: Install Composer dependencies
+          run: composer install --no-progress --prefer-dist --optimize-autoloader
+
+        - name: Prepare the application
+          run: |
+            php -r "file_exists('.env') || copy('.env.example', '.env');"
+            php artisan key:generate
+        - name: Clear Config
+          run: php artisan config:clear
+
+        - name: Install npm dependencies
+          run: npm install
+
+        - name: Publish assets
+          run: npm run prod
+
+        - name: Run Migration
+          run: php artisan migrate -v
+          env:
+            DB_PORT: ${{ job.services.mysql.ports['3306'] }}
+            REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
+
+        - name: Test with phpunit
+          run: vendor/bin/phpunit --coverage-text
+          env:
+            DB_PORT: ${{ job.services.mysql.ports['3306'] }}
+            REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
+
+#  deploy_main:
+#    name: Deploy Main
+#    runs-on: ubuntu-latest
+#    if: github.ref == 'refs/heads/main'
+#    needs: test
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v2
+#
+#      - name: Deploy
+#        uses: jbrooksuk/laravel-forge-action@v1.0.2
+#        with:
+#          trigger_url: ${{ secrets.FORGE_TRIGGER_URL }}
+
+
+#  deploy_staging:
+#    name: Deploy Staging
+#    runs-on: ubuntu-latest
+#    if: github.ref == 'refs/heads/staging'
+#    needs: test
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v2
+#
+#      - name: Deploy
+#        uses: jbrooksuk/laravel-forge-action@v1.0.2
+#        with:
+#          trigger_url: ${{ secrets.FORGE_STAGING_TRIGGER_URL }}
