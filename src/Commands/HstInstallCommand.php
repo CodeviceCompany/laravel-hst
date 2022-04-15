@@ -24,14 +24,14 @@ class HstInstallCommand extends Command
             return 1;
         }
 
-//        $this->installComposerPackages();
-//
-//        $this->installNodePackages();
-//
+        $this->installComposerPackages();
+
+        $this->installNodePackages();
+
         $this->publishFiles();
 
         $this->line('');
-        $this->comment('npm install && npm run dev && git config core.hooksPath ./githooks/ && chmod +x githooks/*');
+        $this->comment('npm install && npm run dev && git config core.hooksPath ./githooks/ && chmod +x githooks/* && chmod +x wipit');
 
         //render('<div class="px-1 bg-green-300">Successfully installed</div>');
 
