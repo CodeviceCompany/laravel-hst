@@ -75,6 +75,7 @@ class HstInstallCommand extends Command
             ],
             devPackages: [
                 'barryvdh/laravel-debugbar',
+                'barryvdh/laravel-ide-helper',
                 'friendsofphp/php-cs-fixer',
                 'nunomaduro/larastan',
                 'phpmd/phpmd',
