@@ -84,7 +84,7 @@ class HstInstallCommand extends Command
                 'spatie/laravel-stubs',
                 'spatie/laravel-web-tinker',
                 'laravel-shift/blueprint',
-                'nunomaduro/phpinsights'
+                'nunomaduro/phpinsights',
             ],
             output: $this->output,
             composer: $this->option('composer')
