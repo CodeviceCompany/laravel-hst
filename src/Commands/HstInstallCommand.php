@@ -83,6 +83,7 @@ class HstInstallCommand extends Command
                 'beyondcode/laravel-query-detector',
                 'spatie/laravel-stubs',
                 'spatie/laravel-web-tinker',
+                'laravel-shift/blueprint',
             ],
             output: $this->output,
             composer: $this->option('composer')
