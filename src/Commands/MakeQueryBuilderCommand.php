@@ -6,7 +6,7 @@ use Illuminate\Console\GeneratorCommand;
 
 class MakeQueryBuilderCommand extends GeneratorCommand
 {
-    protected $signature = 'make:query-builder {name}';
+    protected $signature = 'hst:make:query-builder {name}';
 
     protected $description = 'Create a new query builder class';
 

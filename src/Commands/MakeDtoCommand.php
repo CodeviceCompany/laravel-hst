@@ -9,7 +9,7 @@ class MakeDtoCommand extends GeneratorCommand
 {
     use CreatesMatchingTest;
 
-    protected $name = 'make:dto';
+    protected $name = 'hst:make:dto';
 
     protected $description = 'Create a new Data Transfer Object class';
 

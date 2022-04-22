@@ -11,7 +11,7 @@ class MakeActionCommand extends GeneratorCommand
 {
     use CreatesMatchingTest;
 
-    protected $name = 'make:action';
+    protected $name = 'hst:make:action';
 
     protected $description = 'Create a new action class';
 
@@ -22,7 +22,7 @@ class MakeActionCommand extends GeneratorCommand
         parent::handle();
 
         if ($this->option('dto')) {
-            $this->call('make:dto', [
+            $this->call('hst:make:dto', [
                 'name' => $this->getDtoClassName($this->argument('name')),
             ]);
         }
