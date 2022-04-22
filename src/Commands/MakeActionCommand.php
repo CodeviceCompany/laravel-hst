@@ -15,6 +15,8 @@ class MakeActionCommand extends GeneratorCommand
 
     protected $description = 'Create a new action class';
 
+    protected $type = 'Action';
+
     public function handle()
     {
         parent::handle();
@@ -95,7 +97,12 @@ class MakeActionCommand extends GeneratorCommand
     {
         return file_exists($customPath = $this->laravel->basePath(trim($stub, '/')))
             ? $customPath
-            : __DIR__.$stub;
+            : __DIR__ . $stub;
+    }
+
+    protected function getDefaultNamespace($rootNamespace)
+    {
+        return $rootNamespace . '\Actions';
     }
 
     protected function getOptions()
