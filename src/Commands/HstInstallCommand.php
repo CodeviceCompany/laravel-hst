@@ -92,6 +92,7 @@ class HstInstallCommand extends Command
                 'spatie/laravel-web-tinker',
                 'laravel-shift/blueprint',
                 // 'nunomaduro/phpinsights',
+                "composer require opcodesio/log-viewer",
             ],
             output: $this->output,
             composer: $this->option('composer')
